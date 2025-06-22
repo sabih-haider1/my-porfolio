@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Code, Terminal, Mail, Github, Instagram } from 'lucide-react';
-import Button from './Button';
+import { Code, Terminal, Mail, Github, Instagram } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const [currentText, setCurrentText] = useState('');
@@ -37,10 +36,6 @@ const Hero: React.FC = () => {
     const timer = setTimeout(typeText, isDeleting ? deleteSpeed : typeSpeed);
     return () => clearTimeout(timer);
   }, [currentText, isDeleting, currentIndex, texts]);
-
-  const scrollToAbout = () => {
-    document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const socialLinks = [
     {

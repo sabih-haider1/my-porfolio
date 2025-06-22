@@ -5,12 +5,11 @@ import {
   SiHtml5, SiCss3, SiGit, SiGithub, SiMysql, SiMongodb, SiNodedotjs, SiTypescript, SiFigma,
   SiPython, SiDocker, SiAmazon, SiFirebase, SiPostgresql, SiRedis, SiJest, SiWebpack
 } from 'react-icons/si';
-import { FaShoppingCart, FaCode, FaDatabase, FaServer } from 'react-icons/fa';
+import { FaShoppingCart, FaCode } from 'react-icons/fa';
 
 const SkillsSlider: React.FC = () => {
   // Calculate exact width to match Hero section (1200px)
   // Each item: minWidth(120px) + padding(2rem = 32px) + gap(2rem = 32px) = 184px
-  const itemWidth = 184;
   const heroWidth = 1200;
 
   // First row skills (moving left)
