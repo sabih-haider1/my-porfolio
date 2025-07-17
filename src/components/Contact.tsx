@@ -74,27 +74,27 @@ const Contact: React.FC = () => {
   ];
 
   return (
-    <SectionWrapper id="contact" className="bg-gray-800/50">
+    <SectionWrapper id="contact" className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 py-20">
       <div className="text-center mb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
+          className="text-4xl sm:text-5xl font-extrabold mb-4 bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-lg"
         >
-          Get In <span className="gradient-text">Touch</span>
+          Get In Touch
         </motion.h2>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-emerald-400 mx-auto rounded-full"
+          className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-emerald-400 mx-auto rounded-full"
         />
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-12">
+      <div className="grid gap-12 md:grid-cols-2">
         {/* Contact Information */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
@@ -104,10 +104,10 @@ const Contact: React.FC = () => {
           className="space-y-8"
         >
           <div>
-            <h3 className="text-2xl font-semibold text-gray-100 mb-4">
+            <h3 className="text-2xl font-semibold text-white mb-4 drop-shadow-sm">
               Let's Connect
             </h3>
-            <p className="text-gray-400 leading-relaxed">
+            <p className="text-gray-200 leading-relaxed">
               I'm always interested in new opportunities and exciting projects. 
               Whether you have a question, want to collaborate, or just want to say hello, 
               feel free to reach out!
@@ -123,27 +123,27 @@ const Contact: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="flex items-center space-x-4 p-4 rounded-lg bg-gray-700 border border-gray-600 hover:border-cyan-400/50 transition-all duration-300 group"
+                className="flex items-center gap-4 p-4 rounded-2xl bg-white/10 backdrop-blur-lg shadow-lg border border-white/20 hover:bg-cyan-400/10 hover:border-cyan-400/30 transition-all duration-300 group"
               >
-                <div className="text-cyan-400 group-hover:text-emerald-400 transition-colors duration-300">
+                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400 text-gray-900 group-hover:from-emerald-400 group-hover:to-cyan-400 transition-colors duration-300">
                   {info.icon}
                 </div>
                 <div>
-                  <h4 className="font-medium text-gray-100">{info.title}</h4>
-                  <p className="text-gray-400">{info.value}</p>
+                  <h4 className="font-medium text-white">{info.title}</h4>
+                  <p className="text-gray-200">{info.value}</p>
                 </div>
               </motion.a>
             ))}
           </div>
 
           {/* Additional Info */}
-          <div className="code-block">
+          <div className="max-w-md rounded-2xl bg-white/10 backdrop-blur-lg shadow-xl border border-white/20 p-6">
             <div className="flex items-center space-x-2 mb-3">
               <div className="w-3 h-3 bg-red-500 rounded-full"></div>
               <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
             </div>
-            <pre className="text-emerald-400 text-sm">
+            <pre className="text-emerald-400 text-sm text-left whitespace-pre-wrap">
 {`// Available for opportunities
 const availability = {
   freelance: true,
@@ -164,9 +164,9 @@ const responseTime = "within 24 hours";`}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="card"
+          className="rounded-3xl bg-white/10 backdrop-blur-lg shadow-2xl border border-white/20 p-8"
         >
-          <h3 className="text-2xl font-semibold text-gray-100 mb-6">
+          <h3 className="text-2xl font-semibold text-white mb-6 drop-shadow-sm">
             Send Message
           </h3>
 
@@ -182,7 +182,7 @@ const responseTime = "within 24 hours";`}
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors duration-200"
+                className="w-full px-4 py-3 bg-white/10 border-none rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/80 focus:bg-white/20 transition-all duration-200 shadow-inner backdrop-blur-md"
                 placeholder="Your name"
               />
             </div>
@@ -198,7 +198,7 @@ const responseTime = "within 24 hours";`}
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors duration-200"
+                className="w-full px-4 py-3 bg-white/10 border-none rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/80 focus:bg-white/20 transition-all duration-200 shadow-inner backdrop-blur-md"
                 placeholder="your.email@example.com"
               />
             </div>
@@ -214,7 +214,7 @@ const responseTime = "within 24 hours";`}
                 onChange={handleInputChange}
                 required
                 rows={5}
-                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:border-cyan-400 transition-colors duration-200 resize-none"
+                className="w-full px-4 py-3 bg-white/10 border-none rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/80 focus:bg-white/20 transition-all duration-200 shadow-inner backdrop-blur-md resize-none"
                 placeholder="Tell me about your project or opportunity..."
               />
             </div>
@@ -245,17 +245,13 @@ const responseTime = "within 24 hours";`}
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center space-x-2"
+              className="w-full flex items-center justify-center space-x-2 rounded-full shadow-lg bg-gradient-to-r from-cyan-400 to-emerald-400 text-white font-bold px-8 py-3 hover:from-emerald-400 hover:to-cyan-400 transition-all duration-200"
             >
               {isSubmitting ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-gray-900 border-t-transparent rounded-full animate-spin" />
-                  <span>Sending...</span>
-                </>
+                <span>Sending...</span>
               ) : (
                 <>
-                  <Send size={20} />
-                  <span>Send Message</span>
+                  <Send size={18} className="mr-2" /> Send Message
                 </>
               )}
             </Button>
