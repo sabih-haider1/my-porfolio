@@ -10,6 +10,7 @@ interface ButtonProps {
   className?: string;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  style?: React.CSSProperties;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -21,6 +22,7 @@ const Button: React.FC<ButtonProps> = ({
   className = '',
   disabled = false,
   type,
+  style,
 }) => {
   const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900';
   
@@ -55,6 +57,7 @@ const Button: React.FC<ButtonProps> = ({
         className={classes}
         target="_blank"
         rel="noopener noreferrer"
+        style={style}
       >
         {buttonContent}
       </a>
@@ -67,6 +70,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       type={type || 'button'}
       className={`${classes} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+      style={style}
     >
       {buttonContent}
     </button>

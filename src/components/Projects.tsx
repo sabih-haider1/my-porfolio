@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Eye } from "lucide-react";
+import { Github } from "lucide-react";
 import SectionWrapper from "./SectionWrapper";
 import type { Project } from "../types";
 

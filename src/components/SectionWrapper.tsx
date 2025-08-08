@@ -6,6 +6,7 @@ interface SectionWrapperProps {
   id: string;
   className?: string;
   delay?: number;
+  style?: React.CSSProperties;
 }
 
 const SectionWrapper: React.FC<SectionWrapperProps> = ({
@@ -13,9 +14,10 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
   id,
   className = '',
   delay = 0,
+  style,
 }) => {
   return (
-    <section id={id} className={`section-padding ${className}`}>
+    <section id={id} className={`section-padding ${className}`} style={style}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
