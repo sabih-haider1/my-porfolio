@@ -219,9 +219,6 @@ const Footer: React.FC = () => {
                 color: "#6b7280",
               }}
             >
-              <span>Built with</span>
-              <span style={{ color: "#ef4444" }}>❤</span>
-              <span>using React & TypeScript</span>
             </div>
           </div>
         </motion.div>
