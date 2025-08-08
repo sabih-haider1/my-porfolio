@@ -30,9 +30,9 @@ const Contact: React.FC = () => {
     setSubmitStatus('idle');
 
     try {
-      const serviceId = 'service_your_service_id';
-      const templateId = 'template_your_template_id';
-      const publicKey = 'your_public_key';
+      const serviceId = 'service_m94bvqq';
+      const templateId = 'template_hg6b6ro';
+      const publicKey = 'XvWlxbPipY_NIbdgR';
 
       await emailjs.sendForm(
         serviceId,
