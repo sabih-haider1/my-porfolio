@@ -45,12 +45,12 @@ const Hero: React.FC = () => {
     },
     {
       icon: <Github size={20} />,
-      href: 'https://github.com/yourusername',
+      href: 'https://github.com/sabih-haider1',
       label: 'GitHub'
     },
     {
       icon: <Instagram size={20} />,
-      href: 'https://instagram.com/yourusername',
+      href: 'https://www.instagram.com/sabih._.haider/',
       label: 'Instagram'
     }
   ];
