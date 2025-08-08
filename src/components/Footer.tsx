@@ -1,50 +1,82 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Mail } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
-  
+
   const socialLinks = [
     {
       icon: <Github size={20} />,
-      href: 'https://github.com/yourusername',
-      label: 'GitHub'
+      href: "https://github.com/yourusername",
+      label: "GitHub",
     },
     {
       icon: <Linkedin size={20} />,
-      href: 'https://linkedin.com/in/yourusername',
-      label: 'LinkedIn'
+      href: "https://linkedin.com/in/yourusername",
+      label: "LinkedIn",
     },
     {
       icon: <Twitter size={20} />,
-      href: 'https://twitter.com/yourusername',
-      label: 'Twitter'
+      href: "https://twitter.com/yourusername",
+      label: "Twitter",
     },
     {
       icon: <Mail size={20} />,
-      href: 'mailto:sabih0364@gmail.com',
-      label: 'Email'
-    }
+      href: "mailto:sabih0364@gmail.com",
+      label: "Email",
+    },
   ];
 
   return (
-    <footer className="bg-gray-900 border-t border-gray-700">
-      <div className="container-custom py-12">
-        <div className="grid md:grid-cols-3 gap-8 items-center">
+    <footer
+      style={{
+        backgroundColor: "#111827",
+        borderTop: "1px solid #374151",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "3rem 1rem",
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: "2rem",
+            alignItems: "center",
+          }}
+        >
           {/* Logo and Description */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="space-y-4"
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
           >
-            <h3 className="text-xl font-bold gradient-text">
+            <h3
+              style={{
+                fontSize: "1.25rem",
+                fontWeight: "bold",
+                background: "linear-gradient(90deg, #06b6d4, #8b5cf6)",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+              }}
+            >
               Sabih Haider
             </h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Software Engineer & Front-End Developer passionate about creating 
+            <p
+              style={{
+                color: "#9ca3af",
+                fontSize: "0.875rem",
+                lineHeight: "1.6",
+              }}
+            >
+              Software Engineer & Front-End Developer passionate about creating
               innovative solutions and building the future of web technology.
             </p>
           </motion.div>
@@ -55,17 +87,35 @@ const Footer: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="space-y-4"
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
           >
-            <h4 className="text-lg font-semibold text-gray-100 mb-4">
+            <h4
+              style={{
+                fontSize: "1.125rem",
+                fontWeight: 600,
+                color: "#f3f4f6",
+                marginBottom: "1rem",
+              }}
+            >
               Quick Links
             </h4>
-            <div className="space-y-2">
-              {['Home', 'About', 'Skills', 'Projects', 'Contact'].map((link) => (
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {["Home", "About", "Skills", "Projects", "Contact"].map((link) => (
                 <a
                   key={link}
                   href={`#${link.toLowerCase()}`}
-                  className="block text-gray-400 hover:text-cyan-400 transition-colors duration-200 text-sm"
+                  style={{
+                    color: "#9ca3af",
+                    fontSize: "0.875rem",
+                    textDecoration: "none",
+                    transition: "color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#06b6d4")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#9ca3af")
+                  }
                 >
                   {link}
                 </a>
@@ -79,12 +129,19 @@ const Footer: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-4"
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
           >
-            <h4 className="text-lg font-semibold text-gray-100 mb-4">
+            <h4
+              style={{
+                fontSize: "1.125rem",
+                fontWeight: 600,
+                color: "#f3f4f6",
+                marginBottom: "1rem",
+              }}
+            >
               Connect
             </h4>
-            <div className="flex space-x-4">
+            <div style={{ display: "flex", gap: "1rem" }}>
               {socialLinks.map((social, index) => (
                 <motion.a
                   key={social.label}
@@ -96,7 +153,25 @@ const Footer: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   whileHover={{ scale: 1.1, y: -2 }}
-                  className="p-3 bg-gray-700 border border-gray-600 rounded-lg text-gray-400 hover:text-cyan-400 hover:border-cyan-400/50 transition-all duration-300"
+                  style={{
+                    padding: "0.75rem",
+                    backgroundColor: "#374151",
+                    border: "1px solid #4b5563",
+                    borderRadius: "0.5rem",
+                    color: "#9ca3af",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "#06b6d4";
+                    e.currentTarget.style.borderColor = "rgba(6, 182, 212, 0.5)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "#9ca3af";
+                    e.currentTarget.style.borderColor = "#4b5563";
+                  }}
                   aria-label={social.label}
                 >
                   {social.icon}
@@ -112,15 +187,40 @@ const Footer: React.FC = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="border-t border-gray-700 mt-8 pt-8 text-center"
+          style={{
+            borderTop: "1px solid #374151",
+            marginTop: "2rem",
+            paddingTop: "2rem",
+            textAlign: "center",
+          }}
         >
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-            <p className="text-gray-400 text-sm">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              alignItems: "center",
+            }}
+          >
+            <p
+              style={{
+                color: "#9ca3af",
+                fontSize: "0.875rem",
+              }}
+            >
               © {currentYear} Sabih Haider. All rights reserved.
             </p>
-            <div className="flex items-center space-x-2 text-sm text-gray-500">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                fontSize: "0.875rem",
+                color: "#6b7280",
+              }}
+            >
               <span>Built with</span>
-              <span className="text-red-500">❤</span>
+              <span style={{ color: "#ef4444" }}>❤</span>
               <span>using React & TypeScript</span>
             </div>
           </div>
@@ -130,4 +230,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer; 
+export default Footer;

@@ -1,140 +1,390 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink, Github, Eye } from 'lucide-react';
-import SectionWrapper from './SectionWrapper';
-import Button from './Button';
-import type { Project } from '../types';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Github, Eye } from "lucide-react";
+import SectionWrapper from "./SectionWrapper";
+import type { Project } from "../types";
 
 const Projects: React.FC = () => {
+  const [hovered, setHovered] = useState<string | null>(null);
+
   const projects: Project[] = [
     {
-      id: '1',
-      title: 'PVC Wall Panels',
-      description: 'Custom WooCommerce e-commerce platform for PVC wall panels with advanced product customization, user management, and payment integration. Features include dynamic pricing, bulk ordering, and admin dashboard.',
-      technologies: ['WordPress', 'WooCommerce', 'PHP', 'MySQL', 'JavaScript', 'CSS'],
-      featured: true,
-      github: '#',
-      live: '#'
+      id: "1",
+      title: "Spam Message Classifier",
+      description:
+        "Built an ML model using TF-IDF + logistic regression achieving ~96% accuracy on test set. Python, scikit-learn.",
+      technologies: ["Python", "Scikit-learn", "NLTK", "Machine Learning"],
+      github: "https://github.com/sabih-haider1/SMS-Spam-Detector",
+      live: "#",
     },
     {
-      id: '2',
-      title: 'Pure Eats',
-      description: 'Diet-based food delivery application with personalized meal recommendations, nutritional tracking, and real-time delivery updates. Built with modern React patterns and responsive design.',
-      technologies: ['React', 'JavaScript', 'TailwindCSS', 'Node.js', 'MongoDB'],
-      featured: true,
-      github: '#',
-      live: '#'
+      id: "2",
+      title: "UPC / Demion University Portal",
+      description:
+        "Frontend portal integrating 20+ educational and admin processes, with business process automation and documentation for each route. Built in React.",
+      technologies: ["React", "JavaScript", "Node.js", "MongoDB"],
+      github: "https://github.com/sabih-haider1/horizon-ucp-frontend",
+      live: "#",
     },
     {
-      id: '3',
-      title: 'Spam Message Classifier',
-      description: 'Machine learning project using SMS dataset to classify messages as spam or legitimate. Implements various ML algorithms with data preprocessing and model evaluation.',
-      technologies: ['Python', 'Machine Learning', 'Pandas', 'Scikit-learn', 'NLTK'],
-      featured: true,
-      github: '#',
-      live: '#'
-    }
+      id: "3",
+      title: "Pro_Physio Web App",
+      description:
+        "Physiotherapy-focused web app for managing patient records, appointments, exercise plans, and progress tracking. Replace tech stack & link with exact details if you’d like to show a live demo.",
+      technologies: ["React", "Node.js", "MongoDB"],
+      github: "https://github.com/sabih-haider1/Physio_Pro",
+      live: "#",
+    },
+    {
+      id: "4",
+      title: "Tetras",
+      description:
+        "Lightweight single-page HTML Tetris game playable in-browser. Built as a portfolio piece for frontend and game logic.",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      github: "https://github.com/sabih-haider1/Tetras-html-game",
+      live: "#",
+    },
+    {
+      id: "5",
+      title: "Pokémon-themed Chess",
+      description:
+        "Standalone HTML chess game with Pokémon-themed pieces, full chess rules implemented (promotion, en passant, castling) and embedded base64 sprites.",
+      technologies: ["HTML", "CSS", "JavaScript"],
+      github: "#",
+      live: "#",
+    },
+    {
+      id: "6",
+      title: "Pure Eats — Food Delivery App",
+      description:
+        "Developed a food delivery platform with authentication, diet filters, and daily meal tracking. Built with React and Firebase.",
+      technologies: ["React", "Firebase"],
+      github: "#",
+      live: "#",
+    },
   ];
 
+  const styles = {
+    sectionInner: {
+      maxWidth: 1200,
+      margin: "0 auto",
+      padding: "48px 20px",
+      color: "#e5e7eb",
+      fontFamily:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+    } as React.CSSProperties,
+    header: {
+      textAlign: "center" as const,
+      marginBottom: 40,
+    },
+    title: {
+      fontSize: "2.25rem",
+      lineHeight: 1.05,
+      fontWeight: 800,
+      margin: 0,
+      background:
+        "linear-gradient(90deg, #06b6d4 0%, #10b981 100%)", // cyan -> emerald
+      WebkitBackgroundClip: "text" as const,
+      WebkitTextFillColor: "transparent" as const,
+      textShadow: "0 6px 18px rgba(0,0,0,0.45)",
+    } as React.CSSProperties,
+    bar: {
+      width: 112,
+      height: 6,
+      margin: "16px auto 0",
+      borderRadius: 9999,
+      background: "linear-gradient(90deg,#06b6d4,#10b981)",
+    } as React.CSSProperties,
+    grid: {
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+      gap: 24,
+      alignItems: "stretch",
+      marginTop: 24,
+    } as React.CSSProperties,
+    card: {
+      position: "relative" as const,
+      borderRadius: 24,
+      padding: 28,
+      minHeight: 420,
+      display: "flex",
+      flexDirection: "column" as const,
+      justifyContent: "space-between",
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      backdropFilter: "blur(8px)",
+      boxShadow:
+        "0 12px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02)",
+      transition: "box-shadow 220ms ease, transform 220ms ease",
+      overflow: "hidden",
+    } as React.CSSProperties,
+    cardHeader: {
+      display: "flex",
+      alignItems: "center",
+      gap: 16,
+      marginBottom: 12,
+    } as React.CSSProperties,
+    avatar: {
+      width: 48,
+      height: 48,
+      borderRadius: "50%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontWeight: 800,
+      fontSize: 20,
+      color: "#0f172a",
+      background: "linear-gradient(135deg,#06b6d4,#10b981)",
+      boxShadow: "0 8px 18px rgba(16,24,40,0.45)",
+      flexShrink: 0,
+    } as React.CSSProperties,
+    projectTitle: {
+      fontSize: 20,
+      fontWeight: 700,
+      color: "#fff",
+      margin: 0,
+      textShadow: "0 6px 14px rgba(0,0,0,0.35)",
+    } as React.CSSProperties,
+    description: {
+      color: "rgba(229,231,235,0.9)",
+      marginBottom: 18,
+      lineHeight: 1.6,
+      flex: 1,
+    } as React.CSSProperties,
+    badgesWrap: {
+      display: "flex",
+      flexWrap: "wrap" as const,
+      gap: 8,
+      marginBottom: 18,
+    } as React.CSSProperties,
+    badge: {
+      display: "inline-block",
+      padding: "6px 10px",
+      borderRadius: 9999,
+      fontSize: 12,
+      fontWeight: 700,
+      color: "#fff",
+      background: "linear-gradient(90deg,#06b6d4,#3b82f6)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      boxShadow: "0 6px 18px rgba(3,7,18,0.35)",
+    } as React.CSSProperties,
+    actions: {
+      display: "flex",
+      gap: 12,
+      marginTop: 8,
+    } as React.CSSProperties,
+    linkBtn: {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 10,
+      padding: "10px 14px",
+      borderRadius: 9999,
+      fontWeight: 700,
+      fontSize: 14,
+      textDecoration: "none",
+      color: "#0f172a",
+      background: "linear-gradient(90deg,#f8fafc 0%, #e6fffa 100%)",
+      border: "1px solid rgba(3, 105, 161, 0.08)",
+      boxShadow: "0 8px 20px rgba(3,7,18,0.25)",
+      transition: "transform 160ms ease, box-shadow 160ms ease, background 160ms ease, color 160ms ease",
+    } as React.CSSProperties,
+    linkBtnDark: {
+      display: "inline-flex",
+      alignItems: "center",
+      gap: 10,
+      padding: "10px 14px",
+      borderRadius: 9999,
+      fontWeight: 700,
+      fontSize: 14,
+      textDecoration: "none",
+      color: "#fff",
+      background: "linear-gradient(90deg,#06b6d4,#10b981)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      boxShadow: "0 10px 28px rgba(6,22,40,0.5)",
+      transition: "transform 160ms ease, box-shadow 160ms ease",
+    } as React.CSSProperties,
+    iconStyle: { marginRight: 6, display: "inline-flex" } as React.CSSProperties,
+    overlay: {
+      position: "absolute" as const,
+      inset: 0,
+      borderRadius: 24,
+      transition: "background 220ms ease, backdrop-filter 220ms ease, opacity 220ms ease",
+      pointerEvents: "none" as const,
+      opacity: 0,
+    } as React.CSSProperties,
+    ctaWrap: {
+      marginTop: 40,
+      textAlign: "center" as const,
+    },
+    codePanel: {
+      maxWidth: 900,
+      margin: "0 auto",
+      borderRadius: 20,
+      padding: 24,
+      background: "rgba(255,255,255,0.04)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      backdropFilter: "blur(8px)",
+      boxShadow: "0 20px 40px rgba(2,6,23,0.6)",
+      textAlign: "left" as const,
+    } as React.CSSProperties,
+    dotRow: { display: "flex", gap: 8, marginBottom: 12 } as React.CSSProperties,
+    dot: (color: string) =>
+      ({
+        width: 10,
+        height: 10,
+        borderRadius: 9999,
+        backgroundColor: color,
+      } as React.CSSProperties),
+    ctaButton: {
+      display: "inline-block",
+      marginTop: 20,
+      padding: "12px 26px",
+      borderRadius: 9999,
+      fontWeight: 800,
+      fontSize: 16,
+      color: "#fff",
+      background: "linear-gradient(90deg,#06b6d4,#10b981)",
+      textDecoration: "none",
+      boxShadow: "0 12px 30px rgba(6,22,40,0.6)",
+      border: "none",
+    } as React.CSSProperties,
+  };
+
   return (
-    <SectionWrapper id="projects" className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 py-20">
-      <div className="text-center mb-16">
-        <motion.h2
+    <SectionWrapper id="projects">
+      <div style={styles.sectionInner}>
+        <header style={styles.header}>
+          <motion.h2
+            style={styles.title}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            Featured Projects
+          </motion.h2>
+
+          <motion.div
+            style={styles.bar}
+            initial={{ opacity: 0, scale: 0.85 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: 0.12 }}
+          />
+        </header>
+
+        <section style={styles.grid}>
+          {projects.map((project, index) => {
+            const isHovered = hovered === project.id;
+            return (
+              <motion.article
+                key={project.id}
+                style={{
+                  ...styles.card,
+                  boxShadow: isHovered
+                    ? "0 20px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02)"
+                    : styles.card.boxShadow,
+                  transform: isHovered ? "translateY(-6px)" : undefined,
+                }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.02 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.08 }}
+                onMouseEnter={() => setHovered(project.id)}
+                onMouseLeave={() => setHovered(null)}
+                aria-labelledby={`project-${project.id}-title`}
+              >
+                {/* overlay */}
+                <div
+                  style={{
+                    ...styles.overlay,
+                    background: isHovered
+                      ? "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))"
+                      : "transparent",
+                    backdropFilter: isHovered ? "blur(6px)" : undefined,
+                    opacity: isHovered ? 1 : 0,
+                  }}
+                />
+
+                <div style={styles.cardHeader}>
+                  <div style={styles.avatar as React.CSSProperties}>
+                    {project.title.charAt(0)}
+                  </div>
+                  <div>
+                    <h3
+                      id={`project-${project.id}-title`}
+                      style={styles.projectTitle}
+                    >
+                      {project.title}
+                    </h3>
+                  </div>
+                </div>
+
+                <p style={styles.description}>{project.description}</p>
+
+                <div style={styles.badgesWrap}>
+                  {project.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      style={{
+                        ...styles.badge,
+                        background:
+                          "linear-gradient(90deg,#06b6d4,#3b82f6)",
+                      }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div style={styles.actions}>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${project.title} - Source code`}
+                      style={styles.linkBtn}
+                      onMouseEnter={(e) => {
+                        const el = e.currentTarget;
+                        el.style.transform = "translateY(-2px)";
+                        el.style.boxShadow = "0 14px 34px rgba(3,7,18,0.35)";
+                      }}
+                      onMouseLeave={(e) => {
+                        const el = e.currentTarget;
+                        el.style.transform = "translateY(0)";
+                        el.style.boxShadow = "0 8px 20px rgba(3,7,18,0.25)";
+                      }}
+                    >
+                      <span style={styles.iconStyle}>
+                        <Github size={18} />
+                      </span>
+                      Code
+                    </a>
+                  )}
+
+                </div>
+              </motion.article>
+            );
+          })}
+        </section>
+
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-5xl font-extrabold mb-4 bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-lg"
+          transition={{ duration: 0.6, delay: 0.5 }}
+          style={styles.ctaWrap}
         >
-          Featured Projects
-        </motion.h2>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-emerald-400 mx-auto rounded-full"
-        />
-      </div>
+          <div style={styles.codePanel}>
+            <div style={styles.dotRow}>
+              <div style={styles.dot("#ef4444")} />
+              <div style={styles.dot("#f59e0b")} />
+              <div style={styles.dot("#10b981")} />
+            </div>
 
-      <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project, index) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: index * 0.2 }}
-            className="relative group rounded-3xl bg-white/10 backdrop-blur-lg shadow-2xl border border-white/20 p-8 flex flex-col justify-between min-h-[420px] hover:scale-[1.025] transition-transform duration-300"
-          >
-            {/* Project Title & Icon */}
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400 text-gray-900 font-bold text-2xl shadow-lg">
-                {project.title.charAt(0)}
-              </div>
-              <h3 className="text-2xl font-bold text-white drop-shadow-sm">
-                {project.title}
-              </h3>
-            </div>
-            {/* Description */}
-            <p className="text-gray-200 mb-6 flex-1">
-              {project.description}
-            </p>
-            {/* Technologies */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              {project.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-500 text-white text-xs font-semibold shadow-md backdrop-blur-md border border-white/10 hover:from-emerald-500 hover:to-cyan-500 transition-colors duration-200"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-            {/* Action Buttons */}
-            <div className="flex gap-4 mt-auto">
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 hover:bg-cyan-400/80 text-cyan-300 hover:text-white shadow transition-all duration-200 border border-cyan-400/30"
-                >
-                  <Github size={18} className="mr-2" /> Code
-                </a>
-              )}
-              {project.live && (
-                <a
-                  href={project.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/20 hover:bg-emerald-400/80 text-emerald-300 hover:text-white shadow transition-all duration-200 border border-emerald-400/30"
-                >
-                  <Eye size={18} className="mr-2" /> Live
-                </a>
-              )}
-            </div>
-            {/* Glassy Overlay on Hover */}
-            <div className="absolute inset-0 rounded-3xl pointer-events-none group-hover:bg-white/10 group-hover:backdrop-blur-sm transition-all duration-300" />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Call to Action */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.5 }}
-        className="text-center mt-20"
-      >
-        <div className="max-w-2xl mx-auto rounded-2xl bg-white/10 backdrop-blur-lg shadow-xl border border-white/20 p-8">
-          <div className="flex items-center space-x-2 mb-3">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-          </div>
-          <pre className="text-emerald-400 text-sm text-left whitespace-pre-wrap">
+            <pre style={{ color: "#10b981", fontSize: 13, margin: 0 }}>
 {`// More projects coming soon...
 const upcomingProjects = [
   "AI-Powered Chat Application",
@@ -145,16 +395,29 @@ const upcomingProjects = [
 
 // Always open to new opportunities
 const openToWork = true;`}
-          </pre>
-        </div>
-        <div className="mt-8">
-          <Button href="#contact" size="lg" className="rounded-full shadow-lg bg-gradient-to-r from-cyan-400 to-emerald-400 text-white font-bold px-8 py-3 hover:from-emerald-400 hover:to-cyan-400 transition-all duration-200">
-            Let's Work Together
-          </Button>
-        </div>
-      </motion.div>
+            </pre>
+          </div>
+
+          <a
+            href="#contact"
+            style={styles.ctaButton}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget;
+              el.style.transform = "translateY(-4px)";
+              (el.style as any).boxShadow = "0 18px 44px rgba(6,22,40,0.7)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget;
+              el.style.transform = "translateY(0)";
+              (el.style as any).boxShadow = "0 12px 30px rgba(6,22,40,0.6)";
+            }}
+          >
+            Let’s Work Together
+          </a>
+        </motion.div>
+      </div>
     </SectionWrapper>
   );
 };
 
-export default Projects; 
+export default Projects;

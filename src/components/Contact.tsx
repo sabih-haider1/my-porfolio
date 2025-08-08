@@ -30,10 +30,9 @@ const Contact: React.FC = () => {
     setSubmitStatus('idle');
 
     try {
-      // EmailJS configuration
-      const serviceId = 'service_your_service_id'; // You'll need to create this in EmailJS
-      const templateId = 'template_your_template_id'; // You'll need to create this in EmailJS
-      const publicKey = 'your_public_key'; // You'll get this from EmailJS
+      const serviceId = 'service_your_service_id';
+      const templateId = 'template_your_template_id';
+      const publicKey = 'your_public_key';
 
       await emailjs.sendForm(
         serviceId,
@@ -62,8 +61,8 @@ const Contact: React.FC = () => {
     {
       icon: <Phone size={24} />,
       title: 'Phone',
-      value: '+92 XXX XXX XXXX',
-      href: 'tel:+92XXXXXXXXXX'
+      value: '+92 341 008 4746',
+      href: 'tel:+923410084746'
     },
     {
       icon: <MapPin size={24} />,
@@ -74,14 +73,29 @@ const Contact: React.FC = () => {
   ];
 
   return (
-    <SectionWrapper id="contact" className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 py-20">
-      <div className="text-center mb-16">
+    <SectionWrapper
+      id="contact"
+      style={{
+        background: 'linear-gradient(to bottom right, rgba(17,24,39,0.8), rgba(31,41,55,0.6))',
+        padding: '80px 0'
+      }}
+    >
+      {/* Title */}
+      <div style={{ textAlign: 'center', marginBottom: '64px' }}>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-5xl font-extrabold mb-4 bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-lg"
+          style={{
+            fontSize: '2.25rem',
+            fontWeight: 800,
+            marginBottom: '16px',
+            background: 'linear-gradient(to right, #22d3ee, #34d399)',
+            WebkitBackgroundClip: 'text',
+            color: 'transparent',
+            textShadow: '0 2px 4px rgba(0,0,0,0.4)'
+          }}
         >
           Get In Touch
         </motion.h2>
@@ -90,31 +104,37 @@ const Contact: React.FC = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-emerald-400 mx-auto rounded-full"
+          style={{
+            width: '112px',
+            height: '4px',
+            background: 'linear-gradient(to right, #22d3ee, #34d399)',
+            margin: '0 auto',
+            borderRadius: '9999px'
+          }}
         />
       </div>
 
-      <div className="grid gap-12 md:grid-cols-2">
+      <div style={{ display: 'grid', gap: '48px', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
         {/* Contact Information */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="space-y-8"
+          style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
         >
           <div>
-            <h3 className="text-2xl font-semibold text-white mb-4 drop-shadow-sm">
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'white', marginBottom: '16px', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
               Let's Connect
             </h3>
-            <p className="text-gray-200 leading-relaxed">
-              I'm always interested in new opportunities and exciting projects. 
-              Whether you have a question, want to collaborate, or just want to say hello, 
+            <p style={{ color: '#e5e7eb', lineHeight: '1.6' }}>
+              I'm always interested in new opportunities and exciting projects.
+              Whether you have a question, want to collaborate, or just want to say hello,
               feel free to reach out!
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {contactInfo.map((info, index) => (
               <motion.a
                 key={info.title}
@@ -123,27 +143,61 @@ const Contact: React.FC = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="flex items-center gap-4 p-4 rounded-2xl bg-white/10 backdrop-blur-lg shadow-lg border border-white/20 hover:bg-cyan-400/10 hover:border-cyan-400/30 transition-all duration-300 group"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px',
+                  padding: '16px',
+                  borderRadius: '16px',
+                  background: 'rgba(255,255,255,0.1)',
+                  backdropFilter: 'blur(16px)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  transition: 'all 0.3s ease',
+                  textDecoration: 'none'
+                }}
               >
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-emerald-400 text-gray-900 group-hover:from-emerald-400 group-hover:to-cyan-400 transition-colors duration-300">
+                <div
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '50%',
+                    background: 'linear-gradient(to bottom right, #22d3ee, #34d399)',
+                    color: '#111827',
+                    transition: 'background 0.3s ease'
+                  }}
+                >
                   {info.icon}
                 </div>
                 <div>
-                  <h4 className="font-medium text-white">{info.title}</h4>
-                  <p className="text-gray-200">{info.value}</p>
+                  <h4 style={{ fontWeight: 500, color: 'white', margin: 0 }}>{info.title}</h4>
+                  <p style={{ color: '#e5e7eb', margin: 0 }}>{info.value}</p>
                 </div>
               </motion.a>
             ))}
           </div>
 
           {/* Additional Info */}
-          <div className="max-w-md rounded-2xl bg-white/10 backdrop-blur-lg shadow-xl border border-white/20 p-6">
-            <div className="flex items-center space-x-2 mb-3">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+          <div
+            style={{
+              maxWidth: '28rem',
+              borderRadius: '16px',
+              background: 'rgba(255,255,255,0.1)',
+              backdropFilter: 'blur(16px)',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+              border: '1px solid rgba(255,255,255,0.2)',
+              padding: '24px'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+              <div style={{ width: '12px', height: '12px', background: '#ef4444', borderRadius: '50%' }} />
+              <div style={{ width: '12px', height: '12px', background: '#facc15', borderRadius: '50%' }} />
+              <div style={{ width: '12px', height: '12px', background: '#22c55e', borderRadius: '50%' }} />
             </div>
-            <pre className="text-emerald-400 text-sm text-left whitespace-pre-wrap">
+            <pre style={{ color: '#34d399', fontSize: '0.875rem', whiteSpace: 'pre-wrap', margin: 0 }}>
 {`// Available for opportunities
 const availability = {
   freelance: true,
@@ -164,15 +218,23 @@ const responseTime = "within 24 hours";`}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="rounded-3xl bg-white/10 backdrop-blur-lg shadow-2xl border border-white/20 p-8"
+          style={{
+            borderRadius: '24px',
+            background: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(16px)',
+            boxShadow: '0 12px 32px rgba(0,0,0,0.5)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            padding: '32px'
+          }}
         >
-          <h3 className="text-2xl font-semibold text-white mb-6 drop-shadow-sm">
+          <h3 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'white', marginBottom: '24px', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
             Send Message
           </h3>
 
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+          <form ref={formRef} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            {/* Name */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="name" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#d1d5db', marginBottom: '8px' }}>
                 Name *
               </label>
               <input
@@ -182,13 +244,23 @@ const responseTime = "within 24 hours";`}
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border-none rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/80 focus:bg-white/20 transition-all duration-200 shadow-inner backdrop-blur-md"
                 placeholder="Your name"
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  background: 'rgba(255,255,255,0.1)',
+                  border: 'none',
+                  borderRadius: '12px',
+                  color: 'white',
+                  fontSize: '1rem',
+                  outline: 'none'
+                }}
               />
             </div>
 
+            {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="email" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#d1d5db', marginBottom: '8px' }}>
                 Email *
               </label>
               <input
@@ -198,13 +270,23 @@ const responseTime = "within 24 hours";`}
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-white/10 border-none rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/80 focus:bg-white/20 transition-all duration-200 shadow-inner backdrop-blur-md"
                 placeholder="your.email@example.com"
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  background: 'rgba(255,255,255,0.1)',
+                  border: 'none',
+                  borderRadius: '12px',
+                  color: 'white',
+                  fontSize: '1rem',
+                  outline: 'none'
+                }}
               />
             </div>
 
+            {/* Message */}
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="message" style={{ display: 'block', fontSize: '0.875rem', fontWeight: 500, color: '#d1d5db', marginBottom: '8px' }}>
                 Message *
               </label>
               <textarea
@@ -214,8 +296,18 @@ const responseTime = "within 24 hours";`}
                 onChange={handleInputChange}
                 required
                 rows={5}
-                className="w-full px-4 py-3 bg-white/10 border-none rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/80 focus:bg-white/20 transition-all duration-200 shadow-inner backdrop-blur-md resize-none"
                 placeholder="Tell me about your project or opportunity..."
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  background: 'rgba(255,255,255,0.1)',
+                  border: 'none',
+                  borderRadius: '12px',
+                  color: 'white',
+                  fontSize: '1rem',
+                  outline: 'none',
+                  resize: 'none'
+                }}
               />
             </div>
 
@@ -224,10 +316,18 @@ const responseTime = "within 24 hours";`}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center space-x-2 p-3 bg-green-500/20 border border-green-500/30 rounded-lg"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px',
+                  background: 'rgba(34,197,94,0.2)',
+                  border: '1px solid rgba(34,197,94,0.3)',
+                  borderRadius: '8px'
+                }}
               >
-                <CheckCircle size={20} className="text-green-500" />
-                <span className="text-green-400 text-sm">Message sent successfully!</span>
+                <CheckCircle size={20} color="#22c55e" />
+                <span style={{ color: '#4ade80', fontSize: '0.875rem' }}>Message sent successfully!</span>
               </motion.div>
             )}
 
@@ -235,23 +335,46 @@ const responseTime = "within 24 hours";`}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center space-x-2 p-3 bg-red-500/20 border border-red-500/30 rounded-lg"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px',
+                  background: 'rgba(239,68,68,0.2)',
+                  border: '1px solid rgba(239,68,68,0.3)',
+                  borderRadius: '8px'
+                }}
               >
-                <AlertCircle size={20} className="text-red-500" />
-                <span className="text-red-400 text-sm">Failed to send message. Please try again.</span>
+                <AlertCircle size={20} color="#ef4444" />
+                <span style={{ color: '#f87171', fontSize: '0.875rem' }}>Failed to send message. Please try again.</span>
               </motion.div>
             )}
 
+            {/* Submit Button */}
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center space-x-2 rounded-full shadow-lg bg-gradient-to-r from-cyan-400 to-emerald-400 text-white font-bold px-8 py-3 hover:from-emerald-400 hover:to-cyan-400 transition-all duration-200"
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '9999px',
+                background: 'linear-gradient(to right, #22d3ee, #34d399)',
+                color: 'white',
+                fontWeight: 700,
+                padding: '12px 32px',
+                cursor: 'pointer',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                fontSize: '1rem',
+                transition: 'background 0.3s ease'
+              }}
             >
               {isSubmitting ? (
                 <span>Sending...</span>
               ) : (
                 <>
-                  <Send size={18} className="mr-2" /> Send Message
+                  <Send size={18} style={{ marginRight: '8px' }} /> Send Message
                 </>
               )}
             </Button>
@@ -262,4 +385,4 @@ const responseTime = "within 24 hours";`}
   );
 };
 
-export default Contact; 
+export default Contact;
