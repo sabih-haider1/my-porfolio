@@ -49,9 +49,9 @@ const Hero: React.FC = () => {
       label: 'GitHub'
     },
     {
-      icon: <Instagram size={20} />,
-      href: 'https://www.instagram.com/sabih._.haider/',
-      label: 'Instagram'
+      icon: <Linkedin size={20} />,
+      href: 'https://www.linkedin.com/in/sabih-h-581113274/',
+      label: 'Linkedin'
     }
   ];
 
