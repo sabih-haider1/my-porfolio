@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Code, Terminal, Mail, Github, Instagram } from 'lucide-react';
+import { Code, Terminal, Mail, Github, Linkedin } from 'lucide-react';
 
 const Hero: React.FC = () => {
   const [currentText, setCurrentText] = useState('');
