@@ -2,6 +2,16 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## Contact Form Email
+
+The contact form posts to a small `/api/contact` mail endpoint. To receive messages in `sabih0364@gmail.com`, set these environment variables in your deployment platform or local shell:
+
+- `GMAIL_USER`
+- `GMAIL_APP_PASSWORD`
+- `CONTACT_TO` (defaults to `sabih0364@gmail.com`)
+
+For Gmail, use an app password rather than your normal account password.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh

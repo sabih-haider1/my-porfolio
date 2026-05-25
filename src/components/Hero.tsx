@@ -1,215 +1,125 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Code, Terminal, Mail, Github, Linkedin } from 'lucide-react';
+import React from 'react';
+import { ExternalLink, Github, Linkedin } from 'lucide-react';
+import Heading from './primitives/Heading';
+import resumePdf from '../assets/Sabih-Haider-Software Engineer _ Full-Stack-Web-Developer.pdf';
 
 const Hero: React.FC = () => {
-  const [currentText, setCurrentText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  const texts = [
-    'Software Engineer',
+  const focusMatrix = [
+    { label: 'UI Delivery', value: 'React product pages, admin screens, and dashboard flows.' },
+    { label: 'Platform Work', value: 'WordPress, OpenCart, and SuiteCRM customization.' },
+    { label: 'Integrations', value: 'REST API wiring between frontend, backend, and third-party tools.' },
+    { label: 'Backend', value: 'PHP, Python, MySQL, and practical data-flow logic.' },
   ];
 
-  useEffect(() => {
-    const typeSpeed = isDeleting ? 50 : 100;
-    const deleteSpeed = 50;
-    const pauseTime = 2000;
-
-    const typeText = () => {
-      const currentFullText = texts[currentIndex];
-      
-      if (isDeleting) {
-        setCurrentText(currentFullText.substring(0, currentText.length - 1));
-        if (currentText === '') {
-          setIsDeleting(false);
-          setCurrentIndex((prev) => (prev + 1) % texts.length);
-        }
-      } else {
-        setCurrentText(currentFullText.substring(0, currentText.length + 1));
-        if (currentText === currentFullText) {
-          setTimeout(() => setIsDeleting(true), pauseTime);
-        }
-      }
-    };
-
-    const timer = setTimeout(typeText, isDeleting ? deleteSpeed : typeSpeed);
-    return () => clearTimeout(timer);
-  }, [currentText, isDeleting, currentIndex, texts]);
-
-  const socialLinks = [
-    {
-      icon: <Mail size={20} />,
-      href: 'mailto:sabih0364@gmail.com',
-      label: 'Email'
-    },
-    {
-      icon: <Github size={20} />,
-      href: 'https://github.com/sabih-haider1',
-      label: 'GitHub'
-    },
-    {
-      icon: <Linkedin size={20} />,
-      href: 'https://www.linkedin.com/in/sabih-h-581113274/',
-      label: 'Linkedin'
-    }
+  const authoritySignals = [
+    { label: 'Delivery window', value: '2023 - present' },
+    { label: 'Reported performance gain', value: '25% across custom client builds' },
+    { label: 'ML case-study result', value: '96% reported test accuracy' },
   ];
 
   return (
-    <section id="home" style={{ 
-      minHeight: '100vh', 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center', 
-      position: 'relative',
-      marginTop: '-130px',
-      padding: '0 1rem'
-    }}>
-      {/* Background Elements */}
-      <div style={{ position: 'absolute', inset: 0, opacity: 0.1 }}>
-        <div style={{ position: 'absolute', top: '5rem', left: '2.5rem', color: '#22d3ee', fontFamily: 'monospace', fontSize: '0.875rem' }}>
-          <Code size={20} />
-        </div>
-        <div style={{ position: 'absolute', top: '10rem', right: '5rem', color: '#10b981', fontFamily: 'monospace', fontSize: '0.875rem' }}>
-          <Terminal size={20} />
-        </div>
-        <div style={{ position: 'absolute', bottom: '10rem', left: '5rem', color: '#8b5cf6', fontFamily: 'monospace', fontSize: '0.875rem' }}>
-          {'</>'}
-        </div>
-      </div>
+    <section id="home" className="py-rhythm-6">
+      <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-2xl border border-surface-muted bg-[linear-gradient(130deg,rgba(15,23,42,0.86),rgba(17,24,39,0.9))] p-5 sm:p-7 lg:p-8 shadow-elev-2">
+          <div className="grid gap-8 xl:grid-cols-[1.2fr_0.8fr] items-start">
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <div className="inline-flex items-center rounded-pill border border-[rgba(34,211,238,0.35)] bg-[rgba(34,211,238,0.08)] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-accent-blue font-semibold">
+                  Full-Stack Engineer
+                </div>
+                <Heading level={1} className="mb-0 max-w-4xl">
+                  I build web products that work in real constraints.
+                </Heading>
+                <p className="text-body-lg text-muted-300 max-w-3xl leading-7">
+                  Frontend delivery, backend integration, and platform customization with clear tradeoffs and reliable execution.
+                </p>
+              </div>
 
-      <div className="container-custom" style={{ zIndex: 10 }}>
-        {/* Main Hero Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{
-            backgroundColor: '#1f2937',
-            borderRadius: '1rem',
-            padding: '2rem 3rem',
-            maxWidth: '1200px',
-            margin: '0 auto',
-            backdropFilter: 'blur(10px)',
-            boxShadow: '0 15px 40px rgba(0, 0, 0, 0.2)'
-          }}
-        >
-          {/* Name and Social Icons Row */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: '1.5rem',
-            flexWrap: 'wrap',
-            gap: '1rem'
-          }}>
-            {/* Name on the left */}
-            <div style={{ flex: 1, minWidth: '200px' }}>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                style={{ color: '#22d3ee', fontFamily: 'monospace', fontSize: '1rem', marginBottom: '0.25rem' }}
-              >
-                Hello, I'm
-              </motion.p>
-              <motion.h1
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-                style={{ fontSize: '2.25rem', fontWeight: 'bold', margin: 0 }}
-              >
-                <span className="gradient-text">Sabih Haider</span>
-              </motion.h1>
+              <div className="grid gap-3 md:grid-cols-2">
+                {focusMatrix.map((item) => (
+                  <div key={item.label} className="rounded-lg border border-surface-muted bg-[rgba(255,255,255,0.025)] p-4">
+                    <div className="text-[11px] uppercase tracking-[0.16em] text-accent-blue font-semibold">{item.label}</div>
+                    <div className="mt-2 text-sm text-muted-300 leading-6">{item.value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="grid gap-3 md:grid-cols-3">
+                {authoritySignals.map((signal) => (
+                  <div key={signal.label} className="rounded-md border border-surface-muted bg-[rgba(255,255,255,0.02)] px-4 py-3">
+                    <div className="text-[11px] uppercase tracking-[0.16em] text-muted-400">{signal.label}</div>
+                    <div className="mt-1 text-sm font-semibold text-muted-200 leading-6">{signal.value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-3 pt-1">
+                <a
+                  href="#projects"
+                  className="inline-flex items-center px-5 py-3 rounded-md bg-accent-blue text-gray-900 font-semibold"
+                >
+                  View Case Studies
+                </a>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center px-5 py-3 rounded-md border border-surface-muted text-muted-200"
+                >
+                  Start a Conversation
+                </a>
+                <a
+                  href="#building"
+                  className="inline-flex items-center px-5 py-3 rounded-md border border-surface-muted text-muted-200"
+                >
+                  Current Exploration
+                </a>
+              </div>
             </div>
 
-            {/* Social Icons on the right */}
-            <div style={{
-              display: 'flex',
-              gap: '0.75rem',
-              alignItems: 'center'
-            }}>
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '2.75rem',
-                    height: '2.75rem',
-                    border: '1px solid rgba(255, 255, 255, 0.3)',
-                    borderRadius: '0.5rem',
-                    color: 'white',
-                    transition: 'all 0.3s ease',
-                    backgroundColor: 'rgba(255, 255, 255, 0.05)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = '#22d3ee';
-                    e.currentTarget.style.backgroundColor = 'rgba(34, 211, 238, 0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                  }}
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </motion.a>
-              ))}
+            <div className="rounded-xl border border-surface-muted bg-[rgba(255,255,255,0.03)] p-5 space-y-5">
+              <div>
+                <div className="text-xs uppercase tracking-[0.18em] text-accent-blue font-semibold">Current focus</div>
+                <ul className="mt-3 text-sm text-muted-300 space-y-2 leading-6 list-disc pl-4">
+                  <li>Shipping product features that stay stable after launch.</li>
+                  <li>Making existing systems faster without risky rewrites.</li>
+                  <li>Growing toward backend-heavy SaaS and operations tooling.</li>
+                </ul>
+              </div>
+
+              <div className="pt-4 border-t border-surface-muted">
+                <div className="text-xs uppercase tracking-[0.18em] text-accent-blue font-semibold">Links</div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <a
+                    href="https://github.com/sabih-haider1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-pill border border-surface-muted px-3 py-2 text-sm text-muted-200 hover:text-accent-blue"
+                  >
+                    <Github size={15} /> GitHub
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/sabih-h-581113274/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-pill border border-surface-muted px-3 py-2 text-sm text-muted-200 hover:text-accent-blue"
+                  >
+                    <Linkedin size={15} /> LinkedIn
+                  </a>
+                  <a
+                    href={resumePdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-pill border border-surface-muted px-3 py-2 text-sm text-muted-200 hover:text-accent-blue"
+                  >
+                    <ExternalLink size={15} /> Resume
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* Typing Effect */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            style={{ 
-              height: '2.5rem', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
-              marginBottom: '1rem'
-            }}
-          >
-            <span style={{ fontSize: '1.25rem', color: '#d1d5db', fontWeight: 300 }}>
-              I'm a{' '}
-              <span style={{ color: '#10b981', fontWeight: 600 }}>
-                {currentText}
-                <span style={{ animation: 'blink 1s infinite' }}>|</span>
-              </span>
-            </span>
-          </motion.div>
-
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            style={{
-              color: '#9ca3af',
-              fontSize: '1rem',
-              lineHeight: 1.6,
-              textAlign: 'center',
-              marginBottom: '0',
-              maxWidth: '800px',
-              margin: '0 auto 0 auto'
-            }}
-          >
-            I'm a Full-Stack Developer, 22 years old. I've been coding since high school. I make websites that are fast and functional.
-          </motion.p>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 };
 
-export default Hero; 
+export default Hero;

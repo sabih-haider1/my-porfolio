@@ -1,176 +1,121 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useState, useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import type { NavItem } from '../types';
+
+type NavItem = { label: string; href: string };
 
 const navItems: NavItem[] = [
   { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
+  { label: 'Approach', href: '#about' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Exploration', href: '#building' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Stack', href: '#skills' },
   { label: 'Contact', href: '#contact' },
 ];
 
 const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState<string>('#home');
+  const prefersReduced = useReducedMotion();
+  const navRef = useRef<HTMLElement | null>(null);
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  useEffect(() => {
+    const sections = navItems.map((i) => document.querySelector(i.href)).filter(Boolean) as Element[];
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive('#' + entry.target.id);
+          }
+        });
+      },
+      { root: null, rootMargin: '0px 0px -40% 0px', threshold: 0.1 }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollTo = (href: string) => {
+    const id = href.replace('#', '');
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
     setIsOpen(false);
   };
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        backgroundColor: 'transparent',
-        backdropFilter: 'blur(8px)',
-        borderBottom: '1px solid rgba(55, 65, 81, 0.3)',
-        transition: 'all 0.3s ease'
-      }}
+      ref={navRef}
+      initial={{ y: prefersReduced ? 0 : -16, opacity: prefersReduced ? 1 : 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur border-b border-surface-muted"
+      role="navigation"
+      aria-label="Primary Navigation"
     >
-      <div className="container-custom" style={{ padding: '0 1rem' }}>
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between', 
-          height: '4rem',
-          position: 'relative'
-        }}>
-          {/* Logo on the left */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="gradient-text"
-            style={{
-              fontSize: '1.25rem',
-              fontWeight: 'bold',
-              cursor: 'pointer',
-              zIndex: 10
-            }}
-            onClick={() => scrollToSection('#home')}
+      <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="h-16 flex items-center justify-between">
+          <button
+            onClick={() => scrollTo('#home')}
+            className="text-2xl sm:text-display-md font-bold gradient-text bg-clip-text focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
+            aria-label="Go to home"
           >
             Sabih Haider
-          </motion.div>
+          </button>
 
-          {/* Desktop Navigation - Centered */}
-          <div style={{
-            display: 'none',
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            alignItems: 'center',
-            gap: '2rem'
-          }} className="desktop-menu">
+          {/* Desktop menu */}
+          <div className="hidden lg:flex flex-1 justify-center gap-4 xl:gap-6 px-6">
             {navItems.map((item) => (
-              <motion.button
-                key={item.label}
-                whileHover={{ y: -2 }}
-                style={{
-                  color: '#d1d5db',
-                  fontWeight: 500,
-                  transition: 'all 0.2s ease',
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: '0.5rem 1rem',
-                  borderRadius: '0.375rem'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#22d3ee';
-                  e.currentTarget.style.backgroundColor = 'rgba(34, 211, 238, 0.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = '#d1d5db';
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                }}
-                onClick={() => scrollToSection(item.href)}
+              <button
+                key={item.href}
+                onClick={() => scrollTo(item.href)}
+                className={`px-3 py-1 rounded-md text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue ${active === item.href ? 'text-accent-blue bg-surface-muted' : 'text-gray-300 hover:text-accent-blue'}`}
+                aria-current={active === item.href ? 'page' : undefined}
               >
                 {item.label}
-              </motion.button>
+              </button>
             ))}
           </div>
 
-          {/* Mobile Menu Button - Only visible on mobile */}
-          <button
-            style={{
-              display: 'block',
-              color: '#d1d5db',
-              transition: 'color 0.2s ease',
-              zIndex: 10
-            }}
-            className="mobile-menu-btn"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = '#22d3ee';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = '#d1d5db';
-            }}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
+          <div className="hidden lg:block w-8" />
 
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              style={{
-                borderTop: '1px solid #374151',
-                backgroundColor: 'rgba(17, 24, 39, 0.95)',
-                backdropFilter: 'blur(8px)'
-              }}
-              className="mobile-menu"
+          {/* Mobile toggle */}
+          <div className="lg:hidden">
+            <button
+              aria-label="Toggle menu"
+              aria-expanded={isOpen}
+              onClick={() => setIsOpen((v) => !v)}
+              className="p-2 rounded-md text-gray-300 hover:text-accent-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue"
             >
-              <div style={{ padding: '1rem 0' }}>
-                {navItems.map((item) => (
-                  <motion.button
-                    key={item.label}
-                    whileHover={{ x: 10 }}
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      textAlign: 'left',
-                      color: '#d1d5db',
-                      fontWeight: 500,
-                      padding: '0.5rem 0',
-                      transition: 'all 0.2s ease',
-                      background: 'transparent',
-                      border: 'none',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#22d3ee';
-                      e.currentTarget.style.backgroundColor = 'rgba(34, 211, 238, 0.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = '#d1d5db';
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                    }}
-                    onClick={() => scrollToSection(item.href)}
-                  >
-                    {item.label}
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
       </div>
+
+      {/* Mobile menu panel */}
+      {isOpen && (
+        <div className="lg:hidden border-t border-surface-muted bg-[rgba(17,24,39,0.95)] backdrop-blur">
+          <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col gap-2">
+            {navItems.map((item) => (
+              <button
+                key={item.href}
+                onClick={() => scrollTo(item.href)}
+                className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue ${active === item.href ? 'text-accent-blue bg-surface-muted' : 'text-gray-300 hover:text-accent-blue'}`}
+                aria-current={active === item.href ? 'page' : undefined}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </motion.nav>
   );
 };
 
-export default Navigation; 
+export default Navigation;

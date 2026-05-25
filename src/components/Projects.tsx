@@ -1,420 +1,477 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Github } from "lucide-react";
-import SectionWrapper from "./SectionWrapper";
-import type { Project } from "../types";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ExternalLink, Github } from 'lucide-react';
+import SectionWrapper from './SectionWrapper';
+import Heading from './primitives/Heading';
+import Card from './primitives/Card';
 
-const Projects: React.FC = () => {
-  const [hovered, setHovered] = useState<string | null>(null);
+type ProjectCaseStudy = {
+  id: string;
+  title: string;
+  status: 'Production';
+  summary: string;
+  impact: string[];
+  stack: string[];
+  timeline: string[];
+  architecture: string[];
+  workflowMap: string[];
+  decisions: string[];
+  constraints: string[];
+  deployment: string[];
+  observability: string[];
+  notes: string[];
+  links?: {
+    type: 'github' | 'live' | 'case-study';
+    label: string;
+    url: string;
+  }[];
+};
 
-  const projects: Project[] = [
-    {
-      id: "1",
-      title: "Spam Message Classifier",
-      description:
-        "Built an ML model using TF-IDF + logistic regression achieving ~96% accuracy on test set. Python, scikit-learn.",
-      technologies: ["Python", "Scikit-learn", "NLTK", "Machine Learning"],
-      github: "https://github.com/sabih-haider1/SMS-Spam-Detector",
-      live: "#",
-    },
-    {
-      id: "2",
-      title: "UPC / Demion University Portal",
-      description:
-        "Frontend portal integrating 20+ educational and admin processes, with business process automation and documentation for each route. Built in React.",
-      technologies: ["React", "JavaScript", "Node.js", "MongoDB"],
-      github: "https://github.com/sabih-haider1/horizon-ucp-frontend",
-      live: "#",
-    },
-    {
-      id: "3",
-      title: "Pro_Physio Web App",
-      description:
-        "Physiotherapy-focused web app for managing patient records, appointments, exercise plans, and progress tracking. Replace tech stack & link with exact details if you’d like to show a live demo.",
-      technologies: ["React", "Node.js", "MongoDB"],
-      github: "https://github.com/sabih-haider1/Physio_Pro",
-      live: "#",
-    },
-    {
-      id: "4",
-      title: "Tetras",
-      description:
-        "Lightweight single-page HTML Tetris game playable in-browser. Built as a portfolio piece for frontend and game logic.",
-      technologies: ["HTML", "CSS", "JavaScript"],
-      github: "https://github.com/sabih-haider1/Tetras-html-game",
-      live: "#",
-    },
-    {
-      id: "5",
-      title: "Pokémon-themed Chess",
-      description:
-        "Standalone HTML chess game with Pokémon-themed pieces, full chess rules implemented (promotion, en passant, castling) and embedded base64 sprites.",
-      technologies: ["HTML", "CSS", "JavaScript"],
-      github: "#",
-      live: "#",
-    },
-    {
-      id: "6",
-      title: "Pure Eats — Food Delivery App",
-      description:
-        "Developed a food delivery platform with authentication, diet filters, and daily meal tracking. Built with React and Firebase.",
-      technologies: ["React", "Firebase"],
-      github: "#",
-      live: "#",
-    },
-  ];
+type DeliveryWork = {
+  id: string;
+  title: string;
+  summary: string;
+  systems: string[];
+  boundaries: string[];
+  productionNotes: string[];
+};
 
-  const styles = {
-    sectionInner: {
-      maxWidth: 1200,
-      margin: "0 auto",
-      padding: "48px 20px",
-      color: "#e5e7eb",
-      fontFamily:
-        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-    } as React.CSSProperties,
-    header: {
-      textAlign: "center" as const,
-      marginBottom: 40,
-    },
-    title: {
-      fontSize: "2.25rem",
-      lineHeight: 1.05,
-      fontWeight: 800,
-      margin: 0,
-      background:
-        "linear-gradient(90deg, #06b6d4 0%, #10b981 100%)", // cyan -> emerald
-      WebkitBackgroundClip: "text" as const,
-      WebkitTextFillColor: "transparent" as const,
-      textShadow: "0 6px 18px rgba(0,0,0,0.45)",
-    } as React.CSSProperties,
-    bar: {
-      width: 112,
-      height: 6,
-      margin: "16px auto 0",
-      borderRadius: 9999,
-      background: "linear-gradient(90deg,#06b6d4,#10b981)",
-    } as React.CSSProperties,
-    grid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-      gap: 24,
-      alignItems: "stretch",
-      marginTop: 24,
-    } as React.CSSProperties,
-    card: {
-      position: "relative" as const,
-      borderRadius: 24,
-      padding: 28,
-      minHeight: 420,
-      display: "flex",
-      flexDirection: "column" as const,
-      justifyContent: "space-between",
-      background: "rgba(255,255,255,0.04)",
-      border: "1px solid rgba(255,255,255,0.08)",
-      backdropFilter: "blur(8px)",
-      boxShadow:
-        "0 12px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02)",
-      transition: "box-shadow 220ms ease, transform 220ms ease",
-      overflow: "hidden",
-    } as React.CSSProperties,
-    cardHeader: {
-      display: "flex",
-      alignItems: "center",
-      gap: 16,
-      marginBottom: 12,
-    } as React.CSSProperties,
-    avatar: {
-      width: 48,
-      height: 48,
-      borderRadius: "50%",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontWeight: 800,
-      fontSize: 20,
-      color: "#0f172a",
-      background: "linear-gradient(135deg,#06b6d4,#10b981)",
-      boxShadow: "0 8px 18px rgba(16,24,40,0.45)",
-      flexShrink: 0,
-    } as React.CSSProperties,
-    projectTitle: {
-      fontSize: 20,
-      fontWeight: 700,
-      color: "#fff",
-      margin: 0,
-      textShadow: "0 6px 14px rgba(0,0,0,0.35)",
-    } as React.CSSProperties,
-    description: {
-      color: "rgba(229,231,235,0.9)",
-      marginBottom: 18,
-      lineHeight: 1.6,
-      flex: 1,
-    } as React.CSSProperties,
-    badgesWrap: {
-      display: "flex",
-      flexWrap: "wrap" as const,
-      gap: 8,
-      marginBottom: 18,
-    } as React.CSSProperties,
-    badge: {
-      display: "inline-block",
-      padding: "6px 10px",
-      borderRadius: 9999,
-      fontSize: 12,
-      fontWeight: 700,
-      color: "#fff",
-      background: "linear-gradient(90deg,#06b6d4,#3b82f6)",
-      border: "1px solid rgba(255,255,255,0.06)",
-      boxShadow: "0 6px 18px rgba(3,7,18,0.35)",
-    } as React.CSSProperties,
-    actions: {
-      display: "flex",
-      gap: 12,
-      marginTop: 8,
-    } as React.CSSProperties,
-    linkBtn: {
-      display: "inline-flex",
-      alignItems: "center",
-      gap: 10,
-      padding: "10px 14px",
-      borderRadius: 9999,
-      fontWeight: 700,
-      fontSize: 14,
-      textDecoration: "none",
-      color: "#0f172a",
-      background: "linear-gradient(90deg,#f8fafc 0%, #e6fffa 100%)",
-      border: "1px solid rgba(3, 105, 161, 0.08)",
-      boxShadow: "0 8px 20px rgba(3,7,18,0.25)",
-      transition: "transform 160ms ease, box-shadow 160ms ease, background 160ms ease, color 160ms ease",
-    } as React.CSSProperties,
-    linkBtnDark: {
-      display: "inline-flex",
-      alignItems: "center",
-      gap: 10,
-      padding: "10px 14px",
-      borderRadius: 9999,
-      fontWeight: 700,
-      fontSize: 14,
-      textDecoration: "none",
-      color: "#fff",
-      background: "linear-gradient(90deg,#06b6d4,#10b981)",
-      border: "1px solid rgba(255,255,255,0.06)",
-      boxShadow: "0 10px 28px rgba(6,22,40,0.5)",
-      transition: "transform 160ms ease, box-shadow 160ms ease",
-    } as React.CSSProperties,
-    iconStyle: { marginRight: 6, display: "inline-flex" } as React.CSSProperties,
-    overlay: {
-      position: "absolute" as const,
-      inset: 0,
-      borderRadius: 24,
-      transition: "background 220ms ease, backdrop-filter 220ms ease, opacity 220ms ease",
-      pointerEvents: "none" as const,
-      opacity: 0,
-    } as React.CSSProperties,
-    ctaWrap: {
-      marginTop: 40,
-      textAlign: "center" as const,
-    },
-    codePanel: {
-      maxWidth: 900,
-      margin: "0 auto",
-      borderRadius: 20,
-      padding: 24,
-      background: "rgba(255,255,255,0.04)",
-      border: "1px solid rgba(255,255,255,0.08)",
-      backdropFilter: "blur(8px)",
-      boxShadow: "0 20px 40px rgba(2,6,23,0.6)",
-      textAlign: "left" as const,
-    } as React.CSSProperties,
-    dotRow: { display: "flex", gap: 8, marginBottom: 12 } as React.CSSProperties,
-    dot: (color: string) =>
-      ({
-        width: 10,
-        height: 10,
-        borderRadius: 9999,
-        backgroundColor: color,
-      } as React.CSSProperties),
-    ctaButton: {
-      display: "inline-block",
-      marginTop: 20,
-      padding: "12px 26px",
-      borderRadius: 9999,
-      fontWeight: 800,
-      fontSize: 16,
-      color: "#fff",
-      background: "linear-gradient(90deg,#06b6d4,#10b981)",
-      textDecoration: "none",
-      boxShadow: "0 12px 30px rgba(6,22,40,0.6)",
-      border: "none",
-    } as React.CSSProperties,
-  };
+type ArchitectureTrack = {
+  id: string;
+  title: string;
+  state: 'Active';
+  objective: string;
+  systemBoundaries: string[];
+  explorationNow: string[];
+  deploymentThinking: string[];
+  notes: string[];
+};
 
-  return (
-    <SectionWrapper id="projects">
-      <div style={styles.sectionInner}>
-        <header style={styles.header}>
-          <motion.h2
-            style={styles.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            Featured Projects
-          </motion.h2>
-
-          <motion.div
-            style={styles.bar}
-            initial={{ opacity: 0, scale: 0.85 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: 0.12 }}
-          />
-        </header>
-
-        <section style={styles.grid}>
-          {projects.map((project, index) => {
-            const isHovered = hovered === project.id;
-            return (
-              <motion.article
-                key={project.id}
-                style={{
-                  ...styles.card,
-                  boxShadow: isHovered
-                    ? "0 20px 40px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02)"
-                    : styles.card.boxShadow,
-                  transform: isHovered ? "translateY(-6px)" : undefined,
-                }}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.02 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.08 }}
-                onMouseEnter={() => setHovered(project.id)}
-                onMouseLeave={() => setHovered(null)}
-                aria-labelledby={`project-${project.id}-title`}
-              >
-                {/* overlay */}
-                <div
-                  style={{
-                    ...styles.overlay,
-                    background: isHovered
-                      ? "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))"
-                      : "transparent",
-                    backdropFilter: isHovered ? "blur(6px)" : undefined,
-                    opacity: isHovered ? 1 : 0,
-                  }}
-                />
-
-                <div style={styles.cardHeader}>
-                  <div style={styles.avatar as React.CSSProperties}>
-                    {project.title.charAt(0)}
-                  </div>
-                  <div>
-                    <h3
-                      id={`project-${project.id}-title`}
-                      style={styles.projectTitle}
-                    >
-                      {project.title}
-                    </h3>
-                  </div>
-                </div>
-
-                <p style={styles.description}>{project.description}</p>
-
-                <div style={styles.badgesWrap}>
-                  {project.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      style={{
-                        ...styles.badge,
-                        background:
-                          "linear-gradient(90deg,#06b6d4,#3b82f6)",
-                      }}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <div style={styles.actions}>
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${project.title} - Source code`}
-                      style={styles.linkBtn}
-                      onMouseEnter={(e) => {
-                        const el = e.currentTarget;
-                        el.style.transform = "translateY(-2px)";
-                        el.style.boxShadow = "0 14px 34px rgba(3,7,18,0.35)";
-                      }}
-                      onMouseLeave={(e) => {
-                        const el = e.currentTarget;
-                        el.style.transform = "translateY(0)";
-                        el.style.boxShadow = "0 8px 20px rgba(3,7,18,0.25)";
-                      }}
-                    >
-                      <span style={styles.iconStyle}>
-                        <Github size={18} />
-                      </span>
-                      Code
-                    </a>
-                  )}
-
-                </div>
-              </motion.article>
-            );
-          })}
-        </section>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          style={styles.ctaWrap}
-        >
-          <div style={styles.codePanel}>
-            <div style={styles.dotRow}>
-              <div style={styles.dot("#ef4444")} />
-              <div style={styles.dot("#f59e0b")} />
-              <div style={styles.dot("#10b981")} />
-            </div>
-
-            <pre style={{ color: "#10b981", fontSize: 13, margin: 0 }}>
-{`// More projects coming soon...
-const upcomingProjects = [
-  "AI-Powered Chat Application",
-  "Real-time Collaboration Tool", 
-  "Advanced E-commerce Platform",
-  "Mobile-First Web Apps"
+const featuredProjects: ProjectCaseStudy[] = [
+  {
+    id: 'finmile-website-platform',
+    title: 'Finmile.ai Website Platform',
+    status: 'Production',
+    summary: 'Led delivery of the live Finmile.ai website with MST Developers, including admin publishing, auth-gated access, and Supabase-backed content operations.',
+    impact: ['Live in production (UK market)', 'Admin publishing flow for non-technical users', 'Project lead across frontend and backend coordination'],
+    stack: ['React', 'Node.js', 'Supabase Auth', 'Supabase Storage Buckets', 'PostgreSQL', 'JSON editor'],
+    timeline: ['Content model + delivery scope', 'Frontend and backend implementation', 'Admin UX, auth, and publishing rollout'],
+    architecture: [
+      'React frontend for public pages and admin screens',
+      'Node.js integration layer for workflow actions',
+      'Supabase auth with role-gated admin routes',
+      'PostgreSQL content entities plus storage bucket assets',
+    ],
+    workflowMap: ['Admin sign-in', 'Role check', 'Content edit', 'Media attach', 'Publish to live site'],
+    decisions: [
+      'Used Supabase to keep auth, storage, and relational data in one operational surface.',
+      'Built a structured JSON editor so content updates did not require code deployments.',
+      'Separated public rendering from admin publishing to keep permissions explicit.',
+    ],
+    constraints: [
+      'Admin UX had to work for non-technical users without reducing access control.',
+      'Content model needed to support blogs, whitepapers, and resources with shared tooling.',
+      'Publishing flow required safe defaults to avoid accidental live content changes.',
+    ],
+    deployment: ['Live endpoint: finmile.ai', 'Supabase bucket-backed media/document publishing', 'Role-gated admin access with session validation'],
+    observability: ['Auth checks at protected routes', 'Pre-publish validation for required fields and media links'],
+    notes: [
+      'Delivered with MST Developers.',
+      'A key tradeoff was editor flexibility vs. guardrails; I favored constrained templates to keep data consistent.',
+      'Admin workflows were tuned for speed, but still kept explicit permission boundaries and publish confirmations.',
+    ],
+    links: [{ type: 'live', label: 'Live Site', url: 'https://finmile.ai/' }],
+  },
+  {
+    id: 'spam-message-classifier',
+    title: 'Spam Message Classifier',
+    status: 'Production',
+    summary: 'Spam-classification pipeline built for repeatable training runs and lightweight inference.',
+    impact: ['96% reported test accuracy', 'Repeatable preprocessing and training flow', 'Clear path to API packaging'],
+    stack: ['Python', 'scikit-learn', 'TF-IDF', 'Logistic Regression'],
+    timeline: ['Data cleanup', 'Vectorization + training', 'Evaluation + threshold tuning'],
+    architecture: ['Input text cleanup', 'TF-IDF vectorization', 'Logistic regression classifier', 'Evaluation output'],
+    workflowMap: ['Message input', 'Cleanup', 'Vectorize', 'Classify', 'Log result'],
+    decisions: [
+      'Used logistic regression for transparent behavior and fast inference.',
+      'Kept sparse-feature pipeline to simplify retraining and auditing.',
+      'Prioritized deterministic preprocessing over model complexity.',
+    ],
+    constraints: [
+      'Data volume limits confidence on long-tail language patterns.',
+      'Feature drift control is required once traffic diversity increases.',
+    ],
+    deployment: ['Repository packaging completed', 'API wrapper and queue integration planned next'],
+    observability: ['Prediction logging per run', 'Confusion matrix checks during validation snapshots'],
+    notes: ['Not presented as a live SaaS deployment. Public code is available.'],
+    links: [{ type: 'github', label: 'Code', url: 'https://github.com/sabih-haider1/SMS-Spam-Detector' }],
+  },
+  {
+    id: 'pure-eats',
+    title: 'Pure Eats Food Delivery App',
+    status: 'Production',
+    summary: 'Food-delivery workflow with auth, preference filters, and persistent meal tracking.',
+    impact: ['Auth-gated product flow', 'Tracked meal history with stored events', 'Built for iterative feature additions'],
+    stack: ['React', 'Tailwind CSS', 'Firebase Auth', 'Cloud datastore'],
+    timeline: ['User flow and entities', 'Auth and state sync', 'Tracking and filtering improvements'],
+    architecture: ['Client state boundary', 'Auth token lifecycle', 'Preference and event store', 'History rendering'],
+    workflowMap: ['Sign in', 'Validate session', 'Set filters', 'Write event', 'Render history'],
+    decisions: [
+      'Firebase selected to ship auth plus data workflows without backend boilerplate.',
+      'Filter logic implemented in explicit state paths for predictable UX behavior.',
+      'Tracking model designed for repeat usage, not one-off demo screens.',
+    ],
+    constraints: [
+      'State transitions must stay stable across auth refresh boundaries.',
+      'Schema balance needed between velocity and future analytics depth.',
+    ],
+    deployment: ['Managed backend services in place', 'Hardening path: role controls and better monitoring'],
+    observability: ['Session checks at route boundaries', 'Event write/read consistency checks'],
+    notes: ['No live URL is shown until deployment is public.'],
+  },
 ];
 
-// Always open to new opportunities
-const openToWork = true;`}
-            </pre>
+const additionalWork: DeliveryWork[] = [
+  {
+    id: 'client-delivery-systems',
+    title: 'Client Delivery Systems: CMS + Commerce + CRM',
+    summary: 'Live client delivery across WordPress, OpenCart, and SuiteCRM with API and data-path integrations.',
+    systems: ['WordPress', 'WooCommerce', 'OpenCart', 'SuiteCRM', 'REST APIs', 'MySQL', 'PHP'],
+    boundaries: ['Platform extension over rewrite', 'Compatibility with existing plugins', 'Incremental rollout under live constraints'],
+    productionNotes: ['Reported result: up to 25% performance improvement across customization projects.'],
+  },
+];
+
+const architectureTracks: ArchitectureTrack[] = [
+  {
+    id: 'enterprise-platform-track',
+    title: 'Admin and Workflow Systems',
+    state: 'Active',
+    objective: 'Build stronger internal tooling patterns: permissions, publishing flows, and data ownership boundaries.',
+    systemBoundaries: ['Role-aware admin routes', 'Publishing workflow states', 'Content model versioning', 'Audit-friendly change history'],
+    explorationNow: ['Route guards + role policies', 'Draft -> review -> publish transitions', 'Schema changes with migration safety'],
+    deploymentThinking: ['Staging parity before release', 'Rollback-safe migrations', 'Basic monitoring around publish paths'],
+    notes: ['This is an active learning direction grounded in current delivery work.'],
+  },
+  {
+    id: 'distributed-ai-track',
+    title: 'AI Workflow Reliability',
+    state: 'Active',
+    objective: 'Improve orchestration reliability for multi-step AI workflows without overcomplicating early implementations.',
+    systemBoundaries: ['Request intake', 'Orchestration layer', 'Provider adapters', 'Validation and logging'],
+    explorationNow: ['Retry policies for failed calls', 'Fallback path planning', 'Traceable workflow logs'],
+    deploymentThinking: ['Queue-backed burst handling', 'Timeout and retry guardrails', 'Clear error surfacing for operators'],
+    notes: ['No inflated claims. This is current technical exploration.'],
+  },
+  {
+    id: 'commerce-infra-track',
+    title: 'Commerce Data and Operations',
+    state: 'Active',
+    objective: 'Improve reliability across order data, integrations, and operational visibility in commerce-style systems.',
+    systemBoundaries: ['Catalog and inventory', 'Checkout and payment states', 'CRM/fulfillment integrations', 'Operational telemetry'],
+    explorationNow: ['Idempotent event handling', 'Replay-safe integration flows', 'Compatibility-first migration strategy'],
+    deploymentThinking: ['Config separation per environment', 'Operational runbooks for failure cases', 'Performance checks on high-traffic paths'],
+    notes: ['Built as an implementation roadmap, not speculative architecture theater.'],
+  },
+];
+
+const FlowRail: React.FC<{ nodes: string[] }> = ({ nodes }) => {
+  return (
+    <div className="rounded-md border border-surface-muted bg-[rgba(255,255,255,0.02)] p-3">
+      <div className="flex flex-wrap items-center gap-2 text-xs text-muted-300">
+        {nodes.map((node, index) => (
+          <React.Fragment key={node}>
+            <span className="rounded-sm border border-surface-muted bg-[rgba(255,255,255,0.02)] px-2 py-1">{node}</span>
+            {index < nodes.length - 1 ? <span className="text-accent-blue">-&gt;</span> : null}
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const Projects: React.FC = () => {
+  return (
+    <SectionWrapper id="projects">
+      <div className="w-full">
+        <header className="mb-8">
+          <Heading level={2}>
+            Featured <span className="gradient-text">Projects</span>
+          </Heading>
+          <p className="mt-3 text-sm text-muted-400 max-w-3xl">
+            Concise case studies focused on implementation decisions, constraints, and delivery outcomes.
+          </p>
+        </header>
+
+        <div className="sticky top-20 z-20 mb-5 rounded-lg border border-surface-muted bg-[rgba(17,24,39,0.84)] p-3 backdrop-blur">
+          <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Jump to case study</div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {featuredProjects.map((project) => (
+              <a
+                key={project.id}
+                href={`#${project.id}`}
+                className="inline-flex items-center rounded-pill border border-surface-muted px-3 py-1 text-xs text-muted-200 hover:text-accent-blue"
+              >
+                {project.title}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <section className="space-y-5">
+          {featuredProjects.map((project, index) => (
+            <motion.article
+              key={project.id}
+              id={project.id}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.45, delay: index * 0.06 }}
+            >
+              <Card as="article" className="p-0 overflow-hidden">
+                <div className="grid xl:grid-cols-[1.35fr_0.65fr]">
+                  <div className="p-5 sm:p-6 space-y-4 border-b border-surface-muted xl:border-b-0 xl:border-r">
+                    <div className="flex items-start justify-between gap-3 flex-wrap">
+                      <div>
+                        <div className="text-[11px] uppercase tracking-[0.16em] font-semibold text-accent-blue">{project.status}</div>
+                        <h3 className="mt-1 text-[1.3rem] leading-tight font-bold text-gray-100">{project.title}</h3>
+                      </div>
+                    </div>
+
+                    <p className="text-sm text-muted-300 leading-6">{project.summary}</p>
+
+                    <div className="grid gap-3 sm:grid-cols-3">
+                      {project.impact.map((item) => (
+                        <div key={item} className="rounded-md border border-surface-muted bg-[rgba(255,255,255,0.02)] px-3 py-2 text-sm text-muted-200">
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="grid gap-3 lg:grid-cols-2">
+                      <div>
+                        <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Implementation</div>
+                        <ul className="mt-2 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                          {project.architecture.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Workflow</div>
+                        <div className="mt-2">
+                          <FlowRail nodes={project.workflowMap} />
+                        </div>
+                      </div>
+                    </div>
+
+                    <details className="rounded-md border border-surface-muted bg-[rgba(255,255,255,0.02)] p-3" open>
+                      <summary className="cursor-pointer text-sm font-semibold text-muted-200">Implementation decisions</summary>
+                      <ul className="mt-3 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                        {project.decisions.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </details>
+
+                    <details className="rounded-md border border-surface-muted bg-[rgba(255,255,255,0.02)] p-3">
+                      <summary className="cursor-pointer text-sm font-semibold text-muted-200">Production constraints</summary>
+                      <ul className="mt-3 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                        {project.constraints.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </details>
+
+                    <details className="rounded-md border border-surface-muted bg-[rgba(255,255,255,0.02)] p-3">
+                      <summary className="cursor-pointer text-sm font-semibold text-muted-200">Selected delivery notes</summary>
+                      <ul className="mt-3 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                        {project.notes.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </details>
+                  </div>
+
+                  <aside className="p-5 sm:p-6 space-y-5 bg-[rgba(255,255,255,0.015)] xl:sticky xl:top-24 xl:self-start">
+                    <div>
+                      <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Implementation timeline</div>
+                      <ol className="mt-2 space-y-2 text-sm text-muted-400">
+                        {project.timeline.map((item, timelineIndex) => (
+                          <li key={item} className="flex gap-2 leading-6">
+                            <span className="text-accent-blue font-semibold">{String(timelineIndex + 1).padStart(2, '0')}</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    <div>
+                      <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Deployment realities</div>
+                      <ul className="mt-2 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                        {project.deployment.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Observability</div>
+                      <ul className="mt-2 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                        {project.observability.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="pt-4 border-t border-surface-muted">
+                      <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold mb-2">Stack</div>
+                      <div className="flex flex-wrap gap-2">
+                        {project.stack.map((tech) => (
+                          <span
+                            key={tech}
+                            className="inline-flex items-center rounded-pill bg-[rgba(34,211,238,0.12)] px-3 py-1 text-[11px] font-semibold text-accent-blue border border-[rgba(34,211,238,0.2)]"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {project.links?.length ? (
+                      <div className="pt-3 border-t border-surface-muted flex flex-wrap gap-2">
+                        {project.links.map((link) => (
+                          <a
+                            key={link.url}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 rounded-pill bg-white px-4 py-2 text-sm font-bold text-gray-900 shadow-elev-1"
+                          >
+                            {link.type === 'github' ? <Github size={15} /> : <ExternalLink size={15} />}
+                            {link.label}
+                          </a>
+                        ))}
+                      </div>
+                    ) : null}
+                  </aside>
+                </div>
+              </Card>
+            </motion.article>
+          ))}
+        </section>
+
+        <section className="mt-10">
+          <div className="mb-4">
+            <h3 className="text-h3 font-bold text-gray-100">Additional Production Work</h3>
+          </div>
+          <div className="grid gap-4">
+            {additionalWork.map((item) => (
+              <Card key={item.id} as="article" className="space-y-4">
+                <div className="flex items-center justify-between gap-3 flex-wrap">
+                  <h4 className="text-h3 font-semibold text-gray-100">{item.title}</h4>
+                  <span className="text-[11px] uppercase tracking-[0.16em] font-semibold text-accent-blue">Production delivery</span>
+                </div>
+                <p className="text-sm text-muted-300 leading-6">{item.summary}</p>
+
+                <div className="grid gap-3 lg:grid-cols-3">
+                  <div>
+                    <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Systems</div>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {item.systems.map((tech) => (
+                        <span
+                          key={tech}
+                          className="inline-flex items-center rounded-pill border border-surface-muted bg-[rgba(255,255,255,0.02)] px-3 py-1 text-[11px] text-muted-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Implementation boundaries</div>
+                    <ul className="mt-2 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                      {item.boundaries.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Production notes</div>
+                    <ul className="mt-2 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                      {item.productionNotes.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-10">
+          <div className="mb-4">
+            <h3 className="text-h3 font-bold text-gray-100">Engineering Directions</h3>
+            <p className="mt-2 text-sm text-muted-400 max-w-3xl">
+              Current technical exploration based on real delivery work.
+            </p>
           </div>
 
-          <a
-            href="#contact"
-            style={styles.ctaButton}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget;
-              el.style.transform = "translateY(-4px)";
-              (el.style as any).boxShadow = "0 18px 44px rgba(6,22,40,0.7)";
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget;
-              el.style.transform = "translateY(0)";
-              (el.style as any).boxShadow = "0 12px 30px rgba(6,22,40,0.6)";
-            }}
-          >
-            Let’s Work Together
-          </a>
-        </motion.div>
+          <div className="grid gap-4 lg:grid-cols-3">
+            {architectureTracks.map((track) => (
+              <Card key={track.id} as="article" className="space-y-4">
+                <div className="flex items-center justify-between gap-2">
+                  <h4 className="text-h3 font-semibold text-gray-100">{track.title}</h4>
+                  <span className="text-[11px] uppercase tracking-[0.16em] font-semibold text-accent-blue">{track.state}</span>
+                </div>
+
+                <p className="text-sm text-muted-300 leading-6">{track.objective}</p>
+
+                <div>
+                  <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Current boundaries</div>
+                  <ul className="mt-2 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                    {track.systemBoundaries.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <div className="text-[11px] uppercase tracking-[0.16em] text-muted-300 font-semibold">Exploring now</div>
+                  <ul className="mt-2 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                    {track.explorationNow.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <details className="rounded-md border border-surface-muted bg-[rgba(255,255,255,0.02)] p-3">
+                  <summary className="cursor-pointer text-sm font-semibold text-muted-200">Implementation notes</summary>
+                  <ul className="mt-3 space-y-1.5 text-sm text-muted-400 list-disc pl-4 leading-6">
+                    {track.deploymentThinking.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
+                </details>
+
+                <div className="rounded-md border border-surface-muted bg-[rgba(255,255,255,0.02)] px-3 py-2 text-sm text-muted-400">
+                  {track.notes[0]}
+                </div>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <div className="mt-8 rounded-xl border border-surface-muted bg-[rgba(255,255,255,0.03)] p-4">
+          <div className="text-xs uppercase tracking-[0.16em] text-accent-blue font-semibold">Link rule</div>
+          <p className="mt-2 text-sm text-muted-400">
+            Links appear only when a public destination exists. Otherwise the case study stays implementation-first.
+          </p>
+        </div>
       </div>
     </SectionWrapper>
   );

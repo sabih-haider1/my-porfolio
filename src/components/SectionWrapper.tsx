@@ -1,5 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import Container from './primitives/Container';
 
 interface SectionWrapperProps {
   children: React.ReactNode;
@@ -16,19 +17,20 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
   delay = 0,
   style,
 }) => {
+  const prefersReduced = useReducedMotion();
+
   return (
-    <section id={id} className={`section-padding ${className}`} style={style}>
+    <section id={id} className={`py-rhythm-5 ${className}`} style={style}>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: prefersReduced ? 0 : 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.6, delay }}
-        className="container-custom"
       >
-        {children}
+        <Container>{children}</Container>
       </motion.div>
     </section>
   );
 };
 
-export default SectionWrapper; 
+export default SectionWrapper;

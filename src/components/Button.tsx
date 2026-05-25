@@ -24,13 +24,13 @@ const Button: React.FC<ButtonProps> = ({
   type,
   style,
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900';
+  const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
   
   const variants = {
-    primary: 'btn-primary focus:ring-accent-blue',
-    secondary: 'btn-secondary focus:ring-accent-green',
-    outline: 'border border-dark-600 text-gray-300 hover:border-accent-blue hover:text-accent-blue focus:ring-accent-blue',
-  };
+    primary: 'bg-gradient-to-r from-accent-blue to-accent-green text-gray-900 font-semibold focus:ring-accent-blue',
+    secondary: 'border border-accent-blue text-accent-blue bg-transparent focus:ring-accent-green',
+    outline: 'border border-surface-muted text-gray-300 hover:border-accent-blue hover:text-accent-blue focus:ring-accent-blue',
+  } as Record<string, string>;
   
   const sizes = {
     sm: 'px-4 py-2 text-sm',
